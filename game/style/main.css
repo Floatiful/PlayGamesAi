@@ -1,0 +1,309 @@
+/* 2048 Main Stylesheet */
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #faf8ef;
+  color: #776e65;
+  font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+  font-size: 18px;
+}
+
+body {
+  margin: 80px 0;
+}
+
+.container {
+  width: 500px;
+  margin: 0 auto;
+}
+
+/* ── Header ── */
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 80px;
+  font-weight: 700;
+  margin: 0;
+  color: #776e65;
+}
+
+.scores-container {
+  display: flex;
+  gap: 5px;
+}
+
+.score-container,
+.best-container {
+  background: #bbada0;
+  padding: 15px 25px;
+  font-size: 25px;
+  font-weight: 700;
+  color: white;
+  border-radius: 3px;
+  text-align: center;
+  position: relative;
+  min-width: 100px;
+}
+
+.score-container::before,
+.best-container::before {
+  content: attr(data-label);
+  position: absolute;
+  top: 6px;
+  left: 0;
+  right: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #eee4da;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* Score label pseudo-elements */
+.score-container { padding-top: 25px; }
+.best-container  { padding-top: 25px; }
+
+.score-addition {
+  position: absolute;
+  right: 30px;
+  color: rgba(119, 110, 101, 0.9);
+  font-size: 25px;
+  line-height: 25px;
+  font-weight: 700;
+  animation: move-up 600ms ease-in;
+  animation-fill-mode: both;
+}
+
+@keyframes move-up {
+  0%   { top: 25px; opacity: 1; }
+  100% { top: -50px; opacity: 0; }
+}
+
+/* ── Above game ── */
+.above-game {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.game-intro { margin: 0; line-height: 1.65; }
+
+.restart-button {
+  background: #8f7a66;
+  border-radius: 3px;
+  padding: 0 20px;
+  line-height: 42px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #f9f6f2;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* ── Game container ── */
+.game-container {
+  position: relative;
+  padding: 15px;
+  cursor: default;
+  touch-action: none;
+  user-select: none;
+  background: #bbada0;
+  border-radius: 6px;
+  width: 500px;
+  box-sizing: border-box;
+}
+
+/* ── Game message (won / over) ── */
+.game-message {
+  display: none;
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background: rgba(238, 228, 218, 0.5);
+  z-index: 100;
+  text-align: center;
+  border-radius: 6px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: fade-in 800ms ease 1200ms;
+  animation-fill-mode: both;
+}
+
+.game-message.game-won  { display: flex; background: rgba(237, 194, 46, 0.5); color: #f9f6f2; }
+.game-message.game-over { display: flex; }
+
+.game-message p {
+  font-size: 60px;
+  font-weight: 700;
+  margin: 0 0 30px;
+}
+
+@keyframes fade-in {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.lower { display: flex; gap: 10px; }
+
+.keep-playing-button,
+.retry-button {
+  background: #8f7a66;
+  border-radius: 3px;
+  padding: 0 20px;
+  line-height: 42px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #f9f6f2;
+  cursor: pointer;
+}
+
+/* ── Grid ── */
+.grid-container {
+  position: absolute;
+  z-index: 1;
+}
+
+.grid-row {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.grid-row:last-child { margin-bottom: 0; }
+
+.grid-cell {
+  width: 106.25px;
+  height: 106.25px;
+  margin-right: 15px;
+  border-radius: 3px;
+  background: rgba(238, 228, 218, 0.35);
+}
+
+.grid-cell:last-child { margin-right: 0; }
+
+/* ── Tile container ── */
+.tile-container {
+  position: relative;
+  z-index: 2;
+  height: 470px; /* 4*106.25 + 3*15 = 470 */
+}
+
+/* ── Tiles ── */
+.tile {
+  position: absolute;
+  width: 106.25px;
+  height: 106.25px;
+  border-radius: 3px;
+  transition: 100ms ease-in-out;
+  transition-property: transform;
+}
+
+.tile .tile-inner {
+  border-radius: 3px;
+  background: #eee4da;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 106.25px;
+  font-size: 55px;
+  font-weight: 700;
+  color: #776e65;
+  width: 106.25px;
+  height: 106.25px;
+}
+
+/* Position classes */
+.tile-position-1-1 { transform: translate(  0px,   0px); }
+.tile-position-1-2 { transform: translate(  0px, 121.25px); }
+.tile-position-1-3 { transform: translate(  0px, 242.5px); }
+.tile-position-1-4 { transform: translate(  0px, 363.75px); }
+.tile-position-2-1 { transform: translate(121.25px,   0px); }
+.tile-position-2-2 { transform: translate(121.25px, 121.25px); }
+.tile-position-2-3 { transform: translate(121.25px, 242.5px); }
+.tile-position-2-4 { transform: translate(121.25px, 363.75px); }
+.tile-position-3-1 { transform: translate(242.5px,   0px); }
+.tile-position-3-2 { transform: translate(242.5px, 121.25px); }
+.tile-position-3-3 { transform: translate(242.5px, 242.5px); }
+.tile-position-3-4 { transform: translate(242.5px, 363.75px); }
+.tile-position-4-1 { transform: translate(363.75px,   0px); }
+.tile-position-4-2 { transform: translate(363.75px, 121.25px); }
+.tile-position-4-3 { transform: translate(363.75px, 242.5px); }
+.tile-position-4-4 { transform: translate(363.75px, 363.75px); }
+
+/* Tile value colors */
+.tile-2   .tile-inner { background: #eee4da; }
+.tile-4   .tile-inner { background: #ede0c8; }
+.tile-8   .tile-inner { background: #f2b179; color: #f9f6f2; }
+.tile-16  .tile-inner { background: #f59563; color: #f9f6f2; font-size: 45px; }
+.tile-32  .tile-inner { background: #f67c5f; color: #f9f6f2; font-size: 45px; }
+.tile-64  .tile-inner { background: #f65e3b; color: #f9f6f2; font-size: 45px; }
+.tile-128 .tile-inner { background: #edcf72; color: #f9f6f2; font-size: 40px; box-shadow: 0 0 30px 10px rgba(243,215,116,.2367); }
+.tile-256 .tile-inner { background: #edcc61; color: #f9f6f2; font-size: 40px; box-shadow: 0 0 30px 10px rgba(243,215,116,.3152); }
+.tile-512 .tile-inner { background: #edc850; color: #f9f6f2; font-size: 40px; box-shadow: 0 0 30px 10px rgba(243,215,116,.3937); }
+.tile-1024 .tile-inner { background: #edc53f; color: #f9f6f2; font-size: 35px; box-shadow: 0 0 30px 10px rgba(243,215,116,.4722); }
+.tile-2048 .tile-inner { background: #edc22e; color: #f9f6f2; font-size: 35px; box-shadow: 0 0 30px 10px rgba(243,215,116,.5507); }
+.tile-super .tile-inner { background: #3c3a32; color: #f9f6f2; font-size: 30px; }
+
+/* New tile animation */
+.tile-new .tile-inner {
+  animation: appear 200ms ease 100ms;
+  animation-fill-mode: backwards;
+}
+
+@keyframes appear {
+  0%   { opacity: 0; transform: scale(0); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Merged tile animation */
+.tile-merged .tile-inner {
+  animation: pop 200ms ease 100ms;
+  animation-fill-mode: backwards;
+}
+
+@keyframes pop {
+  0%   { transform: scale(0); }
+  50%  { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* ── Footer ── */
+.game-explanation {
+  margin-top: 30px;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* ── Responsive ── */
+@media screen and (max-width: 520px) {
+  body { margin: 20px 0; }
+  .container { width: 280px; }
+  .title { font-size: 50px; }
+  .score-container, .best-container { font-size: 16px; min-width: 65px; }
+  .game-container { width: 280px; padding: 10px; }
+  .tile-container { height: 260px; }
+  .grid-cell { width: 57.5px; height: 57.5px; margin-right: 10px; }
+  .tile { width: 57.5px; height: 57.5px; }
+  .tile .tile-inner { width: 57.5px; height: 57.5px; line-height: 57.5px; font-size: 27px; }
+  .tile-position-1-1 { transform: translate(0,0); }
+  .tile-position-1-2 { transform: translate(0,67.5px); }
+  .tile-position-1-3 { transform: translate(0,135px); }
+  .tile-position-1-4 { transform: translate(0,202.5px); }
+  .tile-position-2-1 { transform: translate(67.5px,0); }
+  .tile-position-2-2 { transform: translate(67.5px,67.5px); }
+  .tile-position-2-3 { transform: translate(67.5px,135px); }
+  .tile-position-2-4 { transform: translate(67.5px,202.5px); }
+  .tile-position-3-1 { transform: translate(135px,0); }
+  .tile-position-3-2 { transform: translate(135px,67.5px); }
+  .tile-position-3-3 { transform: translate(135px,135px); }
+  .tile-position-3-4 { transform: translate(135px,202.5px); }
+  .tile-position-4-1 { transform: translate(202.5px,0); }
+  .tile-position-4-2 { transform: translate(202.5px,67.5px); }
+  .tile-position-4-3 { transform: translate(202.5px,135px); }
+  .tile-position-4-4 { transform: translate(202.5px,202.5px); }
+  .game-message p { font-size: 30px; }
+}
