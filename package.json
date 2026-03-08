@@ -1,0 +1,15 @@
+{
+  "name": "playgamesai",
+  "version": "1.0.0",
+  "description": "Local game copilot / autoplayer for 2048 with adaptive learning",
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --outfile=dist/copilot.js --target=es2020 --sourcemap",
+    "watch": "esbuild src/index.ts --bundle --outfile=dist/copilot.js --target=es2020 --sourcemap --watch",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "typescript": "^5.9.3"
+  }
+}
