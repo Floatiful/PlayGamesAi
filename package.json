@@ -6,7 +6,9 @@
     "build": "esbuild src/index.ts --bundle --outfile=dist/copilot.js --target=es2020 --sourcemap",
     "watch": "esbuild src/index.ts --bundle --outfile=dist/copilot.js --target=es2020 --sourcemap --watch",
     "typecheck": "tsc --noEmit",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "serve": "node server.js",
+    "dev": "npm run build && node server.js"
   },
   "devDependencies": {
     "esbuild": "^0.25.0",
